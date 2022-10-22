@@ -4,28 +4,33 @@ import java.io.*;
 public class Main {
 
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
-        int N = in.nextInt();
-        int[] arr = new int[N];
-        int[] tmp = new int[N];
+        int N = sc.nextInt();
 
-        for(int i = 0; i < N; i++) {
-            arr[i] = in.nextInt();
+        long [] len = new long[N-1];//도시사이거리
+        long [] pay = new long[N];//기름값
+
+        for(int i = 0 ; i < N-1 ; i++) {
+            len[i] = sc.nextInt();
         }
 
-        Arrays.sort(arr);
-
-        //arr[0]는 그대로
-        tmp[0] = arr[0];
-        for(int i = 1 ; i < arr.length ; i++) {
-            int sum = 0;
-            for(int j = 0 ; j <= i ; j++) {
-                sum += arr[j];
-            }
-            tmp[i] = tmp[i-1] + sum;//이전까지의 누적합 + 자기자신
+        for(int i = 0 ; i < N ; i++) {
+            pay[i] = sc.nextInt();
         }
 
-        System.out.println(tmp[N-1]);
+        long nowpay = pay[0];
+        long total = (nowpay * len[0]);
+
+        for(int i = 1 ; i < N-1 ; i++) {
+
+            //현재 도시의 기름값이 더 싸면 그걸로.
+            if(pay[i] < nowpay)
+                nowpay = pay[i];
+
+            total += (nowpay * len[i]);
+        }
+
+        System.out.print(total);
     }
 }
